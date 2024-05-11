@@ -71,4 +71,21 @@ export const login = catchAsyncErrors(async (req, res, next) => {
             new ErrorHandler(400, "Password and Confirm Password are not same")
         );
     }
+
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+        return next(new ErrorHandler(400, "Invalid Email or Password"));
+    }
+
+    const isPasswordMatched = await user.comparePassword(password);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler(400, "Invalid Email or Password"));
+    }
+    if (role !== user.role) {
+        return next(new ErrorHandler(400, "Invalid Role"));
+    }
+    res.status(200).json({
+        success: true,
+        message: "User loged in Successfully",
+    });
 });
