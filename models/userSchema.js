@@ -6,50 +6,50 @@ import jwt from "jsonwebtoken";
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: true,
+        required: [true, "First Name is required"],
         minLength: [3, "First Name Must Contain At Least 3 Characters!"],
     },
     lastName: {
         type: String,
-        required: true,
+        required: [true, "last Name is required"],
         minLength: [3, "Last Name Must Contain At Least 3 Characters!"],
     },
     email: {
         type: String,
-        required: true,
+        required: [true, "Email is required"],
         validate: [validator.isEmail, "Provide A Valid Email!"],
     },
     phone: {
         type: String,
-        required: true,
+        required: [true, "Phone Number is required"],
         minLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
         maxLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
     },
     nic: {
         type: String,
-        required: true,
+        required: [true, "NIC is required"],
         minLength: [13, " NIC Must Contain 13 Digits!"],
         maxLength: [13, "NIC Must Contain 13 Digits!"],
     },
 
     dob: {
-        type: String,
+        type: Date,
         required: [true, "Date of Birth is required"],
     },
     gender: {
         type: String,
-        required: true,
+        required: [true, "Gender is required"],
         enum: ["Male", "Female"],
     },
     password: {
         type: String,
-        required: true,
+        required: [true, "Password is required"],
         minLength: [6, "Password Must Contain At Least 6 Characters!"],
         select: false,
     },
     role: {
         type: String,
-        required: true,
+        required: [true, "Role is required"],
         enum: ["Admin", "Patient", "Doctor"],
     },
     doctorDepartment: {

@@ -14,6 +14,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
         dob,
         role,
     } = req.body;
+
     if (
         !firstName ||
         !lastName ||
@@ -25,6 +26,17 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
         !dob ||
         !role
     ) {
+        console.log(
+            firstName,
+            lastName,
+            email,
+            phone,
+            password,
+            gender,
+            nic,
+            dob,
+            role
+        );
         return next(new ErrorHandler(400, "Please Fill All Fields"));
     }
 
@@ -47,4 +59,16 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
         success: true,
         message: "Patient Registered Successfully",
     });
+});
+
+export const login = catchAsyncErrors(async (req, res, next) => {
+    const { email, password, confirmPassword, role } = req.body;
+    if (!email || !password || !confirmPassword || !role) {
+        return next(new ErrorHandler(400, "Please Enter Email and Password"));
+    }
+    if (password !== confirmPassword) {
+        return next(
+            new ErrorHandler(400, "Password and Confirm Password are not same")
+        );
+    }
 });
